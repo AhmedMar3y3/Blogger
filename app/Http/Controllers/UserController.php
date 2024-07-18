@@ -62,4 +62,16 @@ class UserController extends Controller
         $user_image = $user_profile_data->image;
         return view('user.guest-profile',compact('logged_user','guest_id','user_image'));
     }
+    public function loadViewPost(){
+        return view('User.view-posts');
+    }
+    public function ViewPost($post_id){
+        $logged_user = Auth::user();
+        $post_data = Post::join('users','users.id','=','posts.user_id')
+        ->where('posts.id',$post_id)
+        ->first(['users.name','posts.*']);
+        $user_profile_data = UserProfile::where('user_id',$logged_user->id)->first();
+        $user_image = $user_profile_data->image;
+        return view('user.view-post',compact('logged_user','post_data','user_image'));
+    }
 }

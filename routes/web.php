@@ -3,11 +3,12 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthTwoController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTwoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,7 +29,10 @@ Route::get('/admin/home', [AdminController::class, 'loadHomePage'])->middleware(
 Route::get('/myposts', [UserController::class, 'loadMyPosts'])->middleware('user');
 Route::get('/create/post', [UserController::class, 'loadCreatePost'])->middleware('user');
 Route::get('/edit/post/{post_id}', [UserController::class,'loadEditPost'])->middleware('user');
-
+Route::get('/view/posts', [UserController::class, 'loadViewPost'])->middleware('user');
+Route::get('/view/post/{post_id}', [UserController::class, 'ViewPost'])->middleware('user');
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('redirectToGoogle');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('handleGoogleCallback');
 
 
 Route::get('/dashboard', function () {
@@ -42,3 +46,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

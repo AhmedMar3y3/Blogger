@@ -269,7 +269,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="/user/home">
+        <a class="nav-link " href="/view/posts" wire:navigate>
           <i class="bi bi-grid"></i>
           <span>Home Page</span>
         </a>
